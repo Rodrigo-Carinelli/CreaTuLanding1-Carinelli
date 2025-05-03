@@ -9,7 +9,7 @@ const ItemListContainer = ({ greeting }) => {
 
 export default ItemListContainer;
 
-*/
+
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -49,4 +49,38 @@ return (
 
 export default ItemListContainer;
 
+*/
 
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import ItemList from "./ItemList";
+
+const ItemListContainer = ({ greeting }) => {
+const [productos, setProductos] = useState([]);
+const { categoryId } = useParams();
+
+useEffect(() => {
+    
+    const mockData = [
+    { id: "1", nombre: "Producto A", precio: 100, imagen: "https://via.placeholder.com/200", categoria: "camisetas" },
+    { id: "2", nombre: "Producto B", precio: 200, imagen: "https://via.placeholder.com/200", categoria: "pantalones" },
+    ];
+
+    const filtered = categoryId
+    ? mockData.filter(prod => prod.categoria === categoryId)
+    : mockData;
+
+    setTimeout(() => {
+    setProductos(filtered);
+    }, 500);
+}, [categoryId]);
+
+return (
+    <div>
+    <h2>{greeting}</h2>
+    <ItemList products={productos} />
+    </div>
+);
+};
+
+export default ItemListContainer;
