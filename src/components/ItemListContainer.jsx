@@ -52,33 +52,43 @@ export default ItemListContainer;
 */
 
 import React, { useEffect, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebase/config"; 
 import { useParams } from "react-router-dom";
 import ItemList from "./ItemList";
 
 const ItemListContainer = ({ greeting }) => {
 const [productos, setProductos] = useState([]);
-const { categoryId } = useParams();
+const { categoryId } = useParams(); 
 
 useEffect(() => {
-    
-    const mockData = [
-    { id: "1", nombre: "Producto A", precio: 100, imagen: "https://via.placeholder.com/200", categoria: "camisetas" },
-    { id: "2", nombre: "Producto B", precio: 200, imagen: "https://via.placeholder.com/200", categoria: "pantalones" },
-    ];
 
-    const filtered = categoryId
-    ? mockData.filter(prod => prod.categoria === categoryId)
-    : mockData;
+    const getProducts = async () => {
+    const querySnapshot = await getDocs(collection(db, "productos"));
+    let productList = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+    }));
 
-    setTimeout(() => {
-    setProductos(filtered);
-    }, 500);
-}, [categoryId]);
+
+    if (categoryId) {
+        productList = productList.filter(prod => prod.category === categoryId);
+    }
+
+    setProductos(productList);
+    };
+
+    getProducts();
+}, [categoryId]); 
 
 return (
     <div>
     <h2>{greeting}</h2>
-    <ItemList products={productos} />
+    {productos.length === 0 ? (
+        <p>No se encontraron productos.</p>
+    ) : (
+        <ItemList productos={productos} />
+    )}
     </div>
 );
 };
