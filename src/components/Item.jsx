@@ -1,13 +1,14 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
-const Item = ({ product }) => {
+const Item = ({ producto }) => {
+if (!producto) return null; 
+
 return (
     <div className="item-card">
-    <h3>{product.title}</h3>
-    <img src={product.image} alt={product.title} style={{ width: "200px" }} />
-    <p>Precio: ${product.price}</p>
-    <Link to={`/item/${product.id}`}>Ver detalle</Link>
+    <h3>{producto.title}</h3>
+    <img src={producto.image} alt={producto.title} style={{ width: "200px" }} />
+    <p>Precio: ${producto.price}</p>
+    <Link to={`/item/${producto.id}`}>Ver detalle</Link>
     </div>
 );
 };
