@@ -5,9 +5,9 @@ const NavBar = () => {
     console.log('renderizando NavBar');
     return (
         <nav style={{ display: "flex", justifyContent: "space-between", padding: "10px", background: "#282c34", color: "white" }}>
-            <h1>Tienda Importados</h1>
+            <h1>Remeras Importadas</h1>
             <div>
-                <Link to="/">Inicio</Link> | 
+                <Link to="/">Ropa</Link> | 
                 <Link to="/categoria/electronica"> Electrónica</Link> | 
                 <Link to="/categoria/ropa"> Ropa</Link> | 
                 <Link to="/categoria/accesorios"> Accesorios</Link>
